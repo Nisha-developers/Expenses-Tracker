@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expeses Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+            <li><a href="#UserGuide">User Guild</a></li>
+            <li><a href="#income-wrapper">Income Summary</a></li>
+            <li><a href="#income-details">Income Details</a></li>
+            <li><a href="#income-form">Income Form</a></li>
+            <li><a href="#expenses-form">Expenses Form</a></li>
+            <li><a href="#expenses-details">Expenses Details</a></li>
+            <li><a href="#expenses-summary">Expenses Summary</a</li>
+            <li><a href="#overall-net balance">Overall Net balance</a></li>
+        </ul>
+        </nav>
+    </header>
+    <div class="container-all">
+    <h1 class="title">Expenses and Personal Tracker</h1>
+    <h2 id="UserGuide">User Guide</h2>
+    <div class="User-guide-container">
+    
+    <div class="user-guide-box user1">
+    <h3>Income User Guide</h3>
+    <p>This is a good platform for knowing your earning and net worth. This platform, ask for the type of your income.
+        If you are a salary earner, weekly-income and daily income will be filtered out. If you earn by wages and allowance, Your daily income and weekly come will not be filtered out.
+        You are going to enter your earning title. That is the way you earn the money eg affiliate marketing, graphic design, content creator,tax officers and whatever
+        occupation you find yourself in. You input your date also. The purpose of inputting your date is it help you calculate your income according
+        to the date for your summaries.Enter the amount of wages or salary that you collect so that it can be calculated. After entering This
+        input, You are going to click on. This is where all operations will be carried out.
+        Your form will be brought out in this format for example
+        <ul>
+            <li>wages: 500</li>
+            <li>Date:23-01-2025</li>
+            <li>Earning-title: Graphic Design</li>
+        </ul> </p>
+    </div>
+
+    <div class="user-guide-box user2">
+        <h3>Expenses User Guide</h3>
+In this section, you will be asked to input all the details of what you bought so far. The item you bought, The price at which you bought it
+How many of the product did you buy and the date you bought the product. This is going to calculate The expenses according to the time you bought
+the product.And that calculations will appear in the expenses summary section.The details of the product you bought will appear in the expenses-details
+in this fotmat
+<ul>
+    <li>Item: </li>
+    <li>Price:</li>
+    <li>Quantity:</li>
+    <li>Date:</li>
+</ul>
+After doing that, your overall-balance will be shown in the overall net-balance
+   </div>
+</div>
+
+    <section class="income-section">
+        <div class="income-wrapper" id="income-wrapper">
+            <h2 class="income-summary">Income Summary</h2>
+            <div class="income-summary inccome">
+      <div class="incom Total-Income">Total income: <span class="income" id="totalIncome"></span></div>
+      <div class="incom yearly-income">Yearly income: <span class="income" id="yearly-income"></span></div>
+      <div class="incom monthly-income">Monthly income:<span class="income"id="monthly-income"></span></div>
+      <div class="incom weekly-income">Weekly income:<span class="income" id="weekly-income"></span></div>
+      <div class="incom daily-income">Daily income: <span class="income"id="daily-income"></span></div>
+    </div>
+    </div>
+    <div class="form-wrapper" id="income-form">
+    <h2>Income Form</h2>
+<div class="container-incomForm inccome" >
+    
+      <form action="">
+        <div class="select-earnin">
+        Select ways you earn your money</div>
+        <div class="choose-label">
+        <label  class="choice">
+        <input type="radio" name="job" id="wages">Wages</label>
+        <label  class="choice">
+        <input type="radio" name="job" id="salary">Salary</label>
+    </div>
+    <label>
+        Occupation:
+       <input type="text" id="occupation"></label>
+       <label for="">
+       Amount:
+       <input type="number" id="amount"></label>
+       <label for="">
+        Date:
+        <input type="date" name="" id="date">
+       </label>
+       <button id="incomeForm">Submit Income Form</button>
+    </div>
+    </form>
+</div>
+
+    </section>
+    
+    <div class="income-details" id="income-details">
+        <h2>Income Details</h2>
+        </div>
+        <section class="expenses-section">
+        <div class="wrapper-expensesform" id="expenses-form">
+        <h2 class="expenses-Form">Expenses Form</h2>
+    
+        <div class="expenses-form">
+          
+         <form action="">
+            <label for="">
+                Item:
+            <input type="text" id="item"></label>
+            <label for="">
+                Price:
+            <input type="number" id="price"></label>
+            <label for="">
+                Quantity:
+            <input type="number" id="Quantity"></label>
+            <label for="">
+                Date:
+            <input type="date" id="exDate"></label>
+            <button id="expensesForm">Submit Expenses Form</button>
+         </form>
+        </div>
+        </div>
+        <div class="expenses-summary-wrapper" id="expenses-summary">
+        <h2>Expenses Summary</h2>
+        <div class="expenses-summary">
+            
+            <div>Total Expenses: <span class="expense" id="totalExpenses"></span></div>
+            <div>Yearly Expenses: <span class="expense" id="yearlyExpenses"></span></div>
+            <div>Monthly Expenses: <span class="expense" id="monthlyExpenses"></span></div>
+            <div>Weekly Expenses: <span class="expense" id="weeklyExpenses"></span></div>
+            <div>Daily Expenses: <span class="expense" id="dailyExpenses"></span></div>
+            
+        </div>
+    
+    </div>
+</section>
+<div id="expenses-details">
+    <h2 class="expenses-details">Expenses Details</h2>
+   </div>
+    <section class="overall-balance" id="overall-net balance">
+        <h2>Net-Balance</h2>
+       <div class="overall">Overall Net-balance: <span class="style-class" id="balance"></span></div>
+    </section>
+</div>
+<div id="circleDesign">
+    <i class='bx bx-chevron-up'></i>
+</div>
+    <footer>
+        <div>@copyright all rights are reserved done by @Nisha</div>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>
