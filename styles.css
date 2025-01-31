@@ -5,8 +5,8 @@
     scroll-behavior: smooth;
 }
 :root{
-    --backgroundColor: black;
-    --color: yellow;
+    --backgroundColor: yellow;
+    --color: black;
     --hover: rgb(199, 17, 17);
     --box-shadow: 2px 2px 19px rgb(199, 17, 17);
     --border-radius1: 10px;
