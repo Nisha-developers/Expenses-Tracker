@@ -227,71 +227,89 @@ const formatCurrency = (amount, currency = 'USD') => {
     }
   }
   
-  // Summary Calculations
-  function updateIncomeSummary() {
-    const now = new Date();
-    const totalIncome = incomeData.reduce((sum, income) => sum + income.amount, 0);
+  function updateIncomeSummary(selectedDate) {
+    const now = selectedDate ? new Date(selectedDate) : new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay()); // Set to Sunday of the current week
+    const startOfWeekStr = startOfWeek.toISOString().split('T')[0];
+    
+    let totalIncome = 0;
+    let yearlyIncome = 0;
+    let monthlyIncome = 0;
+    let weeklyIncome = 0;
+    let dailyIncome = 0;
+    let hasSalary = false;
+
+    incomeData.forEach(income => {
+        const incomeDate = new Date(income.date).toISOString().split('T')[0];
+        const incomeYear = new Date(income.date).getFullYear();
+        const incomeMonth = new Date(income.date).getMonth();
+
+        totalIncome += income.amount;
+        if (incomeYear === now.getFullYear()) yearlyIncome += income.amount;
+        if (incomeYear === now.getFullYear() && incomeMonth === now.getMonth()) {
+          monthlyIncome += income.amount;
+      }
+
+        if (income.type === 'salary') {
+            hasSalary = true;
+            // Don't accumulate daily/weekly for salary entries
+        } else {
+            // This is a wages entry
+            if (incomeDate === todayStr) dailyIncome += income.amount;
+            if (incomeDate >= startOfWeekStr && incomeDate <= todayStr) weeklyIncome += income.amount;
+        }
+    });
     
     document.getElementById('totalIncome').textContent = formatCurrency(totalIncome, userCurrency);
-    
-    // Calculate periodic incomes
-    const yearlyIncome = incomeData
-      .filter(income => new Date(income.date).getFullYear() === now.getFullYear())
-      .reduce((sum, income) => sum + income.amount, 0);
-      
-    const monthlyIncome = incomeData
-      .filter(income => {
-        const incomeDate = new Date(income.date);
-        return incomeDate.getMonth() === now.getMonth() && 
-               incomeDate.getFullYear() === now.getFullYear();
-      })
-      .reduce((sum, income) => sum + income.amount, 0);
-      
-    // Update display
     document.getElementById('yearly-income').textContent = formatCurrency(yearlyIncome, userCurrency);
     document.getElementById('monthly-income').textContent = formatCurrency(monthlyIncome, userCurrency);
-    
-    // Only calculate weekly/daily for wages
-    if (incomeData.some(income => income.type === 'wages')) {
-      const weeklyIncome = monthlyIncome / 4;
-      const dailyIncome = weeklyIncome / 7;
-      
-      document.getElementById('weekly-income').textContent = formatCurrency(weeklyIncome, userCurrency);
-      document.getElementById('daily-income').textContent = formatCurrency(dailyIncome, userCurrency);
+
+    // Show daily/weekly sections only for wages (when there's no salary)
+    if (!hasSalary) {
+        document.querySelector('.weekly-income').style.display = 'inline-block';
+        document.querySelector('.daily-income').style.display = 'inline-block';
+        document.getElementById('weekly-income').textContent = formatCurrency(weeklyIncome, userCurrency);
+        document.getElementById('daily-income').textContent = formatCurrency(dailyIncome, userCurrency);
     } else {
-      document.getElementById('weekly-income').textContent = 'N/A';
-      document.getElementById('daily-income').textContent = 'N/A';
+        document.querySelector('.weekly-income').style.display = 'none';
+        document.querySelector('.daily-income').style.display = 'none';
     }
-  }
-  
-  function updateExpensesSummary() {
-    const now = new Date();
-    const totalExpenses = expensesData.reduce((sum, expense) => sum + expense.total, 0);
+}
+function updateExpensesSummary(selectedDate) {
+    const now = selectedDate ? new Date(selectedDate) : new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay()); // Set to Sunday of the current week
+    const startOfWeekStr = startOfWeek.toISOString().split('T')[0];
+
+    let totalExpenses = 0;
+    let yearlyExpenses = 0;
+    let monthlyExpenses = 0;
+    let weeklyExpenses = 0;
+    let dailyExpenses = 0;
+
+    expensesData.forEach(expense => {
+        const expenseDate = new Date(expense.date).toISOString().split('T')[0];
+        const expenseYear = new Date(expense.date).getFullYear();
+        const expenseMonth = new Date(expense.date).getMonth();
+        totalExpenses += expense.total;
+        if (expenseYear === now.getFullYear()) yearlyExpenses += expense.total;
+        if (expenseYear === now.getFullYear() && expenseMonth === now.getMonth()) {
+          monthlyExpenses += expense.total;
+      }
+        if (expenseDate === todayStr) dailyExpenses += expense.total;
+        if (expenseDate >= startOfWeekStr && expenseDate <= todayStr) weeklyExpenses += expense.total;
+    });
     
     document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses, userCurrency);
-    
-    // Calculate periodic expenses
-    const yearlyExpenses = expensesData
-      .filter(expense => new Date(expense.date).getFullYear() === now.getFullYear())
-      .reduce((sum, expense) => sum + expense.total, 0);
-      
-    const monthlyExpenses = expensesData
-      .filter(expense => {
-        const expenseDate = new Date(expense.date);
-        return expenseDate.getMonth() === now.getMonth() && 
-               expenseDate.getFullYear() === now.getFullYear();
-      })
-      .reduce((sum, expense) => sum + expense.total, 0);
-      
-    const weeklyExpenses = monthlyExpenses / 4;
-    const dailyExpenses = weeklyExpenses / 7;
-    
-    // Update display
     document.getElementById('yearlyExpenses').textContent = formatCurrency(yearlyExpenses, userCurrency);
     document.getElementById('monthlyExpenses').textContent = formatCurrency(monthlyExpenses, userCurrency);
     document.getElementById('weeklyExpenses').textContent = formatCurrency(weeklyExpenses, userCurrency);
     document.getElementById('dailyExpenses').textContent = formatCurrency(dailyExpenses, userCurrency);
-  }
+}
+
   
   function updateNetBalance() {
     const totalIncome = incomeData.reduce((sum, income) => sum + income.amount, 0);
