@@ -5,8 +5,8 @@
     scroll-behavior: smooth;
 }
 :root{
-    --backgroundColor: yellow;
-    --color: black;
+    --color: yellow;
+    --backgroundColor: black;
     --hover: rgb(199, 17, 17);
     --box-shadow: 2px 2px 19px rgb(199, 17, 17);
     --border-radius1: 10px;
@@ -200,7 +200,7 @@ div#circleDesign{
 }
 footer div{
     background-color: var(--color);
-    color: black;
+    color: var(--backgroundColor);
     height: 50px;
     font-weight: bold;
    text-align: center;
